@@ -9,26 +9,21 @@ on:
 
 jobs:
   build:
-    runs-on: self-hosted  # Убедитесь, что ваш Windows runner имеет эту метку
+    runs-on: self-hosted
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Test Docker on Windows
+      - name: Test Docker and Minikube
+        shell: pwsh
         run: |
-          # Проверяем доступность Docker
+          # Временно меняем политику выполнения
+          Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
+          
+          Write-Host "=== Docker Check ==="
           docker --version
-          docker info
           docker ps
-
-      - name: Test Minikube on Windows
-        run: |
-          # Проверяем доступность Minikube
+          
+          Write-Host "=== Minikube Check ==="
           minikube version
           minikube status
-          
-      - name: Check PowerShell availability
-        run: |
-          # Дополнительные проверки для Windows
-          Get-Service docker | Select-Object Name, Status
-          Get-Service com.docker.service | Select-Object Name, Status
