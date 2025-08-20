@@ -14,16 +14,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Test Docker and Minikube
-        shell: pwsh
+      - name: Test Docker
+        shell: cmd
         run: |
-          # Временно меняем политику выполнения
-          Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
-          
-          Write-Host "=== Docker Check ==="
+          echo "=== Docker Check ==="
           docker --version
           docker ps
-          
-          Write-Host "=== Minikube Check ==="
+
+      - name: Test Minikube
+        shell: cmd
+        run: |
+          echo "=== Minikube Check ==="
           minikube version
           minikube status
